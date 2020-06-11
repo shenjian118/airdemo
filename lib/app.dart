@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'splash/page.dart';
 import 'login/page.dart';
+import 'transfer/page.dart';
 
 Widget createApp() {
   final AbstractRoutes routes = PageRoutes(
     pages: <String, Page<Object, dynamic>>{
       'splash_page': SplashPage(),
       'login_page': LoginPage(),
+      'transfer_page': TransferPage(),
     },
   );
 
