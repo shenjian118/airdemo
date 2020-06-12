@@ -1,35 +1,32 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 
-import 'action.dart';
 import 'state.dart';
 
 Widget buildView(TransferState state, Dispatch dispatch, ViewService viewService) {
-
-  List<Widget> _buildChildren() {
-    return state.payeeList.map((payee) {
-      return Container(
-        height: 60,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Text(payee.name),
-            Text(payee.phone),
-          ],
-        ),
-      );
-    }).toList();
-  }
+  final adapter = viewService.buildAdapter();
+  final notice = viewService.buildComponent('notice');
 
   return Scaffold(
     appBar: AppBar(
       backgroundColor: Colors.cyan,
-      title: const Text('ToDoList'),
+      title: const Text('payee list'),
     ),
     body: Column(
       children: <Widget>[
-        viewService.buildComponent('notice'),
-        ..._buildChildren(),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: notice,
+        ),
+        SizedBox(height: 50),
+        Container(
+          height: 500,
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemBuilder: adapter.itemBuilder,
+            itemCount: adapter.itemCount,
+          ),
+        ),
       ],
     ),
     floatingActionButton: FloatingActionButton(
@@ -38,6 +35,4 @@ Widget buildView(TransferState state, Dispatch dispatch, ViewService viewService
       child: const Icon(Icons.add),
     ),
   );
-
-
 }
